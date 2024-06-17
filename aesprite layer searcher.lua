@@ -7,6 +7,9 @@ local matchingLayers = {}
 local function searchLayersInGroup(group)
   for i, layer in ipairs(group.layers) do
     if layer.isGroup then
+      if layer.name:find(searchTerm) then
+        table.insert(matchingLayers, layer)
+      end
       searchLayersInGroup(layer)
     elseif layer.name:find(searchTerm) then
       table.insert(matchingLayers, layer)
@@ -22,6 +25,9 @@ local function searchLayers()
 
   for i, layer in ipairs(sprite.layers) do
     if layer.isGroup then
+      if layer.name:find(searchTerm) then
+        table.insert(matchingLayers, layer)
+      end
       searchLayersInGroup(layer)
     elseif layer.name:find(searchTerm) then
       table.insert(matchingLayers, layer)
