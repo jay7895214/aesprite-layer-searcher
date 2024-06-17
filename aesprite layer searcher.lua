@@ -3,6 +3,17 @@ local searchTerm = ""
 local currentIndex = 0
 local matchingLayers = {}
 
+-- Define a function to recursively search for layer names in groups
+local function searchLayersInGroup(group)
+  for i, layer in ipairs(group.layers) do
+    if layer.isGroup then
+      searchLayersInGroup(layer)
+    elseif layer.name:find(searchTerm) then
+      table.insert(matchingLayers, layer)
+    end
+  end
+end
+
 -- Define a function to search for layer names
 local function searchLayers()
   matchingLayers = {}
@@ -10,7 +21,9 @@ local function searchLayers()
   if not sprite then return end
 
   for i, layer in ipairs(sprite.layers) do
-    if layer.name:find(searchTerm) then
+    if layer.isGroup then
+      searchLayersInGroup(layer)
+    elseif layer.name:find(searchTerm) then
       table.insert(matchingLayers, layer)
     end
   end
