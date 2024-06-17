@@ -1,0 +1,1 @@
+# aesprite-layer-searcher
