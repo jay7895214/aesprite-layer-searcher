@@ -3,15 +3,20 @@ local searchTerm = ""
 local currentIndex = 0
 local matchingLayers = {}
 
+-- Define a function to convert string to lower case
+local function toLowerCase(str)
+  return string.lower(str)
+end
+
 -- Define a function to recursively search for layer names in groups
 local function searchLayersInGroup(group)
   for i, layer in ipairs(group.layers) do
     if layer.isGroup then
-      if layer.name:find(searchTerm) then
+      if toLowerCase(layer.name):find(toLowerCase(searchTerm)) then
         table.insert(matchingLayers, layer)
       end
       searchLayersInGroup(layer)
-    elseif layer.name:find(searchTerm) then
+    elseif toLowerCase(layer.name):find(toLowerCase(searchTerm)) then
       table.insert(matchingLayers, layer)
     end
   end
@@ -25,11 +30,11 @@ local function searchLayers()
 
   for i, layer in ipairs(sprite.layers) do
     if layer.isGroup then
-      if layer.name:find(searchTerm) then
+      if toLowerCase(layer.name):find(toLowerCase(searchTerm)) then
         table.insert(matchingLayers, layer)
       end
       searchLayersInGroup(layer)
-    elseif layer.name:find(searchTerm) then
+    elseif toLowerCase(layer.name):find(toLowerCase(searchTerm)) then
       table.insert(matchingLayers, layer)
     end
   end
